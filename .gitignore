@@ -1,4 +1,5 @@
 Aseprite_*_amd64.deb
 pkg/
 src/
-aseprite-bin-*
+aseprite-*-x86_64.pkg.tar.xz
+aseprite-*-x86_64-package.log*

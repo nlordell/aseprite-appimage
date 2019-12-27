@@ -6,6 +6,6 @@ Pacman .pkg.tar.xz packages.
 ## Usage
 
 ```
-$ cp ~/Downloads/Aseprite-*.deb . # provide your own Aseprite .deb package
+$ cp ~/Downloads/Aseprite_$PKGVER_amd64.deb . # provide your own .deb package
 $ makepkg
 ```
