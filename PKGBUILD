@@ -1,5 +1,5 @@
 pkgname=aseprite
-pkgver=1.2.15_1
+pkgver=1.2.16.3_1
 pkgrel=1
 pkgdesc="Animated sprite editor and pixel art tool"
 url="https://www.aseprite.org/"
