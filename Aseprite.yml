@@ -5,7 +5,7 @@ ingredients:
   sources:
     - deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
   debs:
-    - /app/debs/*
+    - /app/packages/*
   packages:
     - aseprite
   exclude:
