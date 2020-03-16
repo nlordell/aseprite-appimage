@@ -24,8 +24,9 @@ if [[ -e "$target" ]]; then
 		rm -rfI "$target"
 	fi
 fi
-mkdir "$target"
-cp "$root"/Aseprite_*.deb "$target/aseprite.deb"
+mkdir -p "$target/debs"
+deb="$(basename "$root"/Aseprite_*.deb)"
+cp "$deb" "$target/debs/${deb/Aseprite/aseprite}"
 cp "$root/Aseprite.yml" "$target/"
 
 echo "==> Building AppImage"

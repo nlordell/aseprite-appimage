@@ -5,9 +5,11 @@ ingredients:
   sources:
     - deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
   debs:
-    - /app/aseprite.deb
+    - /app/debs/*
   packages:
     - aseprite
+  exclude:
+    - libx11-6
 
 script:
   - sed -i '/^Version=/d' aseprite.desktop
