@@ -1,0 +1,14 @@
+app: aseprite
+
+ingredients:
+  dist: xenial
+  sources:
+    - deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
+  debs:
+    - /app/aseprite.deb
+  packages:
+    - aseprite
+
+script:
+  - sed -i '/^Version=/d' aseprite.desktop
+  - sed -i '/^Encoding=/d' aseprite.desktop
