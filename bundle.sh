@@ -62,12 +62,7 @@ cp "$pkg" "$target/packages/${pkg/Aseprite/aseprite}"
 cp "$root/Aseprite.yml" "$target/"
 
 echo "==> Building AppImage"
-"$docker" run \
-	-it --rm \
-	-v "$target:/app:z" \
-	--device /dev/fuse \
-	$image \
-	pkg2appimage Aseprite.yml
+"$docker" run -it --rm -v "$target:/app:z" $image Aseprite.yml
 
 if [[ $install == y ]]; then
 	echo "==> Installing AppImage"
