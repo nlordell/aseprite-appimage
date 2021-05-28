@@ -1,23 +1,36 @@
 # Aseprite AppImage Bundling
 
-A script and Dockerfile for repackaging officially released Aseprite .deb
-packages into AppImages.
+Aseprite AppImage bundling scripts.
 
 ## Usage
 
-The easiest way to run the script is to copy an Aseprite `.deb` package into the
-root of this repository and run:
-
+Simply build Aseprite following the [official instructions](https://github.com/aseprite/aseprite/blob/main/INSTALL.md).
+Alternatively, a helper script to automate the process is provided:
 ```
-./bundle.sh
+[ASEPRITE_VERSION=...] [SKIA_VERSION=...] ./build.sh
 ```
 
-This will produce a `target/out` directory with the bundled AppImage.
-
-Note that a `.deb` package can also be manually specified. Additionally, he
-script also works with Podman (instead of Docker) and can automatically install
-the repackaged AppImage to `$HOME/Applications`:
-
+Then, package up the bundled files.
 ```
-./bundle.sh -p ~/Downloads/Aseprite_*.deb --podman --install
+[ASEPRITE_VERSION=...] ./package.sh [$PATH_TO_ASEPRITE_REPO [$PATH_TO_ASEPRITE_BUILD]]
 ```
+
+If Aseprite was built with the aforementioned helper script, simply:
+```
+[ASEPRITE_VERSION=...] ./package.sh
+```
+
+## Docker
+
+A `Dockerfile` is provided to simplify the whole process.
+```
+docker build -t localhost/aseprite-build docker
+docker run -it --rm \
+    -v $(pwd):/src:z \
+    [-e ASEPRITE_VERSION=...] [-e SKIA_VERSION=...] \
+    localhost/aseprite-build
+```
+
+## Legacy Scripts
+
+For legacy scripts that repackaged official Aseprite .deb releases, see the `deb` branch.
