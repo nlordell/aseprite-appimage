@@ -1,5 +1,8 @@
 # Aseprite AppImage Bundling
 
+**:warning: This branch contains the legacy scripts used for building AppImages
+from official .deb release, the mainline now builds from source.**
+
 A script and Dockerfile for repackaging officially released Aseprite .deb
 packages into AppImages.
 
