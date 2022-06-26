@@ -15,7 +15,7 @@ pushd aseprite/build > /dev/null
 
 echo "===> Retrieving pre-built Skia library"
 if [[ ! -e skia ]]; then
-    rel=${SKIA_VERSION:-m81-b607b32047}
+    rel=${SKIA_VERSION:-m102-861e4743af}
     curl -OL https://github.com/aseprite/skia/releases/download/$rel/Skia-Linux-Release-x64.zip
     unzip Skia-Linux-Release-x64.zip -d skia
     rm Skia-Linux-Release-x64.zip
@@ -25,8 +25,12 @@ fi
 skia=$(pwd)/skia
 
 echo "===> Building Aseprite"
+export CC=clang-10
+export CXX=clang++-10
 cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_CXX_FLAGS:STRING=-stdlib=libc++ \
+    -DCMAKE_EXE_LINKER_FLAGS:STRING=-stdlib=libc++ \
     -DLAF_BACKEND=skia \
     -DSKIA_DIR=$skia \
     -DSKIA_LIBRARY_DIR=$skia/out/Release-x64 \
