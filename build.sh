@@ -1,10 +1,20 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: 0BSD
 
+latest() {
+    local repo="$1"
+    curl --silent "https://api.github.com/repos/$repo/releases/latest" |
+        grep '"tag_name":' |
+        sed -E 's/^.*"tag_name"\s*:\s*"([^"]*)".*$/\1/'
+}
+
+ASEPRITE_VERSION="${ASEPRITE_VERSION:-$(latest aseprite/aseprite)}"
+SKIA_VERSION="${SKIA_VERSION:-$(latest aseprite/skia)}"
+echo "===> Building Aseprite ${ASEPRITE_VERSION} (Skia ${SKIA_VERSION})"
+
 echo "===> Fetching Aseprite source"
 if [[ ! -e aseprite ]]; then
-    ref=${ASEPRITE_VERSION:-v1.2.40}
-    git clone --recursive --depth 1 --branch $ref \
+    git clone --recursive --depth 1 --branch $ASEPRITE_VERSION \
         https://github.com/aseprite/aseprite.git
 else
     echo "nothing to do."
@@ -15,8 +25,7 @@ pushd aseprite/build >/dev/null
 
 echo "===> Retrieving pre-built Skia library"
 if [[ ! -e skia ]]; then
-    rel=${SKIA_VERSION:-m102-861e4743af}
-    curl -OL https://github.com/aseprite/skia/releases/download/$rel/Skia-Linux-Release-x64-libstdc++.zip
+    curl -OL https://github.com/aseprite/skia/releases/download/$SKIA_VERSION/Skia-Linux-Release-x64-libstdc++.zip
     unzip Skia-Linux-Release-x64-libstdc++.zip -d skia
     rm Skia-Linux-Release-x64-libstdc++.zip
 else
@@ -39,9 +48,7 @@ cmake \
     -DENABLE_CCACHE=off \
     -G Ninja \
     ..
-if [[ -n $ASEPRITE_VERSION ]]; then
-    echo "#define VERSION \"${ASEPRITE_VERSION#v}\"" >src/ver/generated_version.h
-fi
+echo "#define VERSION \"${ASEPRITE_VERSION#v}\"" >src/ver/generated_version.h
 ninja aseprite
 
 popd >/dev/null

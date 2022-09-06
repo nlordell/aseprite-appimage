@@ -31,7 +31,7 @@ mkdir -p AppDir/usr/share/aseprite
 cp -r bin/data AppDir/usr/share/aseprite
 
 echo "===> Packaging AppImage"
-VERSION=${ASEPRITE_VERSION:-$(git -C "$repo" rev-parse --short HEAD)} \
+VERSION=${ASEPRITE_VERSION:-$(git -C "$repo" describe --tags 2>/dev/null || git -C "$repo" rev-parse --short HEAD)} \
 "${linuxdeploy}-plugin-appimage" --appdir=AppDir
 
 popd > /dev/null
